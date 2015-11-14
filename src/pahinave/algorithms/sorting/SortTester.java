@@ -12,7 +12,10 @@ public class SortTester {
 		//test(new SelectionSort());
 		
 		// Test bubble sort
-		test(new BubbleSort());
+		//test(new BubbleSort());
+		
+		// Test insertion sort
+		test(new InsertionSort());
 
 	}
 

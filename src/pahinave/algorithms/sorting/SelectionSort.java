@@ -2,6 +2,9 @@ package pahinave.algorithms.sorting;
 
 public class SelectionSort implements Sorter {
 	public void sort(int[] numbers) {
+		// is it already sorted?
+		if(numbers.length < 2) return;
+		
 		// number of elements
 		int l = numbers.length;
 		
