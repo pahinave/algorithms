@@ -11,7 +11,7 @@ public class MergeSort implements Sorter {
 
 	@Override
 	public void sort(int[] numbers, int start, int end) {
-		// if less than 5 numbers, use insertion sort
+		// if less than 3 numbers, use insertion sort
 		if(end-start<3) {
 			new InsertionSort().sort(numbers, start, end);
 			return;
