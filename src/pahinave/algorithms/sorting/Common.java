@@ -35,10 +35,15 @@ public class Common {
 		Random r = new Random();
 		return IntStream.generate(() -> r.nextInt(100)).limit(n).toArray();
 	}
+	
+	public static int[] generateSameNumberArray(int n) {
+		return IntStream.generate(() -> 123).limit(n).toArray();
+	}
 
 	public static void printArray(String message, int[] array) {
 		System.out.print(message + ": ");
 		Arrays.stream(array).forEach(n -> System.out.print(n + " "));
 		System.out.println("");
 	}
+	
 }

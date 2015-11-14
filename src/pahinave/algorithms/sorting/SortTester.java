@@ -1,21 +1,18 @@
 package pahinave.algorithms.sorting;
 
-import static pahinave.algorithms.sorting.Common.generateDecreasingArray;
-import static pahinave.algorithms.sorting.Common.generateIncreasingArray;
-import static pahinave.algorithms.sorting.Common.generateRandomArray;
-import static pahinave.algorithms.sorting.Common.printArray;
+import static pahinave.algorithms.sorting.Common.*;
 
 public class SortTester {
 	public static void main(String[] args) {
 
 		// Test selection sort
-		//test(new SelectionSort());
+		test(new SelectionSort());
 		
 		// Test bubble sort
 		//test(new BubbleSort());
 		
 		// Test insertion sort
-		test(new InsertionSort());
+		//test(new InsertionSort());
 
 	}
 
@@ -23,38 +20,37 @@ public class SortTester {
 		// n elements
 		int n = 10;
 		
-		testAllAscending(n, sorter);
+		test(generateSameNumberArray(n), sorter);
+		test(generateRandomArray(n), sorter);
+		test(generateDecreasingArray(n), sorter);
+		test(generateIncreasingArray(n), sorter);
 		
-		testAllDescending(n, sorter);
+		// no element array
+		test(new int[0], sorter);
 		
-		testRandom(n, sorter);
+		// single element array
+		test(new int[]{123}, sorter);
 		
-		//test empty array
-		testRandom(0, sorter);
-		//Test single element
-		testRandom(1, sorter);
-		//Test two element
-		testRandom(2, sorter);
+		// 2 element array
+		test(new int[]{34,12}, sorter);
+		
+		System.out.println("\n*** Sort subarray 2 to 8 ***");
+		testSortSubArray(generateRandomArray(n), sorter, 2, 8);
+		testSortSubArray(generateDecreasingArray(n), sorter, 2, 8);
+		testSortSubArray(generateIncreasingArray(n), sorter, 2, 8);
+
+		
 	}
 
-	private static void testRandom(int n, Sorter sorter) {
-		int[] numbers = generateRandomArray(n);
-		printArray("Original random numbers", numbers);
+	private static void test(int[] numbers, Sorter sorter) {
+		printArray("Original numbers", numbers);
 		sorter.sort(numbers);
-		printArray("Sorted random numbers", numbers);
+		printArray("Sorted numbers", numbers);
 	}
-
-	private static void testAllDescending(int n, Sorter sorter) {
-		int[] numbers = generateDecreasingArray(n);
-		printArray("Original decreasing numbers", numbers);
-		sorter.sort(numbers);
-		printArray("Sorted decreasing numbers", numbers);
-	}
-
-	private static void testAllAscending(int n, Sorter sorter) {
-		int[] numbers = generateIncreasingArray(n);
-		printArray("Original acending numbers", numbers);
-		sorter.sort(numbers);
-		printArray("Sorted acending numbers", numbers);
+	
+	private static void testSortSubArray(int[] numbers, Sorter sorter, int start, int end) {
+		printArray("Original numbers", numbers);
+		sorter.sort(numbers, start, end);
+		printArray("Sorted numbers", numbers);
 	}
 }
