@@ -11,6 +11,7 @@ public class BubbleSort implements Sorter{
 
 	@Override
 	public void sort(int[] numbers, int start, int end) {
+
 		// Is it already sorted?
 		if((end-start) < 2) return;
 		

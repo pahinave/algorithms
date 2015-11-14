@@ -6,19 +6,22 @@ public class SortTester {
 	public static void main(String[] args) {
 
 		// Test selection sort
-		test(new SelectionSort());
+		//test(new SelectionSort());
 		
 		// Test bubble sort
 		//test(new BubbleSort());
 		
 		// Test insertion sort
 		//test(new InsertionSort());
+		
+		// test merge sort
+		test(new MergeSort());
 
 	}
 
 	private static void test(Sorter sorter) {
 		// n elements
-		int n = 10;
+		int n = 20;
 		
 		test(generateSameNumberArray(n), sorter);
 		test(generateRandomArray(n), sorter);
@@ -34,10 +37,10 @@ public class SortTester {
 		// 2 element array
 		test(new int[]{34,12}, sorter);
 		
-		System.out.println("\n*** Sort subarray 2 to 8 ***");
-		testSortSubArray(generateRandomArray(n), sorter, 2, 8);
-		testSortSubArray(generateDecreasingArray(n), sorter, 2, 8);
-		testSortSubArray(generateIncreasingArray(n), sorter, 2, 8);
+		System.out.println("\n*** Sort subarray 2 to 18 ***");
+		testSortSubArray(generateRandomArray(n), sorter, 2, 18);
+		testSortSubArray(generateDecreasingArray(n), sorter, 2, 18);
+		testSortSubArray(generateIncreasingArray(n), sorter, 2, 18);
 
 		
 	}
