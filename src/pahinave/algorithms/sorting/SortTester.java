@@ -9,7 +9,10 @@ public class SortTester {
 	public static void main(String[] args) {
 
 		// Test selection sort
-		test(new SelectionSort());
+		//test(new SelectionSort());
+		
+		// Test bubble sort
+		test(new BubbleSort());
 
 	}
 
@@ -18,8 +21,17 @@ public class SortTester {
 		int n = 10;
 		
 		testAllAscending(n, sorter);
+		
 		testAllDescending(n, sorter);
+		
 		testRandom(n, sorter);
+		
+		//test empty array
+		testRandom(0, sorter);
+		//Test single element
+		testRandom(1, sorter);
+		//Test two element
+		testRandom(2, sorter);
 	}
 
 	private static void testRandom(int n, Sorter sorter) {
