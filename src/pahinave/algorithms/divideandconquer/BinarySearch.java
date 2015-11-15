@@ -2,6 +2,24 @@ package pahinave.algorithms.divideandconquer;
 
 import pahinave.utilities.ArrayUtitilities;
 
+/*
+ * Analysis:
+ * Complexity : log n
+ * In each recursive call, we do constant work of O(1) to look
+ * if middle element is equal to the required number. If not,
+ * then we either recurse ONLY on left subarray or right subarray
+ * depending on whether required number is less than or more than
+ * number in the middle
+ * 
+ * Also, by master theorem
+ * a = 1
+ * b = 2
+ * d = 0
+ * b ^ d = 1
+ * => master theorem case 1 (a = b ^ d)
+ * => T(n) = O((n ^ d) log n) => O(log n)
+ */
+
 public class BinarySearch {
 	public int search(int[] numbers, int find) {
 		// No numbers in the array
