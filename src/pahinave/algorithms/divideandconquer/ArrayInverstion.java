@@ -6,6 +6,8 @@ import static pahinave.utilities.ArrayUtitilities.generateIncreasingArray;
 
 
 public class ArrayInverstion {
+	
+	//Array inversion using brute force method
 	public long bruteForce(int[] numbers) {
 		long count = 0;
 		
@@ -19,17 +21,26 @@ public class ArrayInverstion {
 		return count;
 	}
 	
+	// Array inversion using divide-and-conquer
 	public long countInversion(int numbers[]) {
 		return countInversion(numbers, 0, numbers.length-1);
 
 	}
 	public  long countInversion(int[] numbers, int left, int right) {
 
+		// best case - array of size 0 has inversion count of 0
 		if(left == right) return 0;
+		
+		// recursively find inversion count of left half and right half of array
 		int mid = (left + right) / 2;
 		long leftInversion = countInversion(numbers, left, mid);
 		long rightInverstion = countInversion(numbers, mid+1, right);
+		
+		// find inversion count between elements of left subarray (which is sorted)
+		// and right subarray (also sorted)
 		long splitInversion = countSplitInversion(numbers, left, mid, right);
+		
+		// total inversion count is sum of left, right and split inversion
 		return leftInversion + rightInverstion + splitInversion;
 	}
 
@@ -45,6 +56,10 @@ public class ArrayInverstion {
 			if(numbers[lptr] <= numbers[rptr]) {
 				copy[ptr++] = numbers[lptr++];
 			} else {
+				// whenever we had to copy element
+				//from right subarray, it means elements from lptr to mid (inclusive)
+				// are higher than the element being copied to target array
+				// and each of that element is counted as the inversion count
 				count += (mid - lptr + 1);
 				copy[ptr++] = numbers[rptr++];
 			}
