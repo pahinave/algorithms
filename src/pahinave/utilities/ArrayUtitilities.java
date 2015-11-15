@@ -46,10 +46,19 @@ public class ArrayUtitilities {
 		return IntStream.generate(() -> 123).limit(n).toArray();
 	}
 
-	public static void printArray(String message, int[] array) {
+	public static void printArray(String message, int[] numbers) {
 		System.out.print(message + ": ");
-		Arrays.stream(array).forEach(n -> System.out.print(n + " "));
+		Arrays.stream(numbers).forEach(n -> System.out.print(n + " "));
 		System.out.println("");
 	}
 	
+	
+	public static int[] generateRandomSortedArray(int n) {
+		Random r = new Random();
+		int[] numbers = IntStream.generate(() -> r.nextInt(n)).distinct().limit(n).toArray();
+		for(int i=1; i<n; i++) {
+			numbers[i] += numbers[i-1];
+		}
+		return numbers;
+	}
 }
