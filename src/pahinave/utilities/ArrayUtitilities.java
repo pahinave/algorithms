@@ -1,10 +1,10 @@
-package pahinave.algorithms.sorting;
+package pahinave.utilities;
 
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-public class Common {
+public class ArrayUtitilities {
 
 	public static void swap(int[] array, int i, int j) {
 		int temp = array[i];
@@ -35,6 +35,12 @@ public class Common {
 		Random r = new Random();
 		return IntStream.generate(() -> r.nextInt(100)).limit(n).toArray();
 	}
+
+	public static int[] generateDistinctRandomArray(int n) {
+		Random r = new Random();
+		return IntStream.generate(() -> r.nextInt(n*3)).distinct().limit(n).toArray();
+	}
+
 	
 	public static int[] generateSameNumberArray(int n) {
 		return IntStream.generate(() -> 123).limit(n).toArray();

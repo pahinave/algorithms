@@ -1,5 +1,7 @@
 package pahinave.algorithms.sorting;
 
+import pahinave.utilities.ArrayUtitilities;
+
 public class SelectionSort implements Sorter {
 	@Override
 	public void sort(int[] numbers) {
@@ -23,7 +25,7 @@ public class SelectionSort implements Sorter {
 			// exchange them to place next min
 			// at index location
 			if(nextMinIndex != index) {
-				Common.swap(numbers, index, nextMinIndex);
+				ArrayUtitilities.swap(numbers, index, nextMinIndex);
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 package pahinave.algorithms.sorting;
 
-import static pahinave.algorithms.sorting.Common.*;
+import static pahinave.utilities.ArrayUtitilities.*;
 
 public class BubbleSort implements Sorter{
 
