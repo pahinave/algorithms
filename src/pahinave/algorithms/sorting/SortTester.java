@@ -15,7 +15,10 @@ public class SortTester {
 		//test(new InsertionSort());
 		
 		// test merge sort
-		test(new MergeSort());
+		//test(new MergeSort());
+		
+		// test quick sort
+		test(new QuickSort());
 
 	}
 
