@@ -1,8 +1,20 @@
 package pahinave.algorithms.sorting;
 
+import java.util.function.IntBinaryOperator;
+
 import pahinave.utilities.ArrayUtitilities;
 
 public class QuickSort implements Sorter {
+	
+	IntBinaryOperator pivotGenerator;
+	
+	public QuickSort() {
+		pivotGenerator = (start, end) -> start;
+	}
+	
+	public QuickSort(IntBinaryOperator pivotGenerator) {
+		this.pivotGenerator = pivotGenerator;
+	}
 
 	@Override
 	public void sort(int[] numbers) {
@@ -20,7 +32,9 @@ public class QuickSort implements Sorter {
 		sort(numbers, partitionIndex+1, end);
 	}
 
+	
 	private int partition(int[] numbers, int start, int end) {
+		ArrayUtitilities.swap(numbers, start, pivotGenerator.applyAsInt(start, end));
 		int pivot = numbers[start];
 		int i = start + 1;
 		int j = start + 1;

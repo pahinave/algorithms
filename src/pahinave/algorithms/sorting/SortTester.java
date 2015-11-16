@@ -1,6 +1,10 @@
 package pahinave.algorithms.sorting;
 
-import static pahinave.utilities.ArrayUtitilities.*;
+import static pahinave.utilities.ArrayUtitilities.generateDecreasingArray;
+import static pahinave.utilities.ArrayUtitilities.generateIncreasingArray;
+import static pahinave.utilities.ArrayUtitilities.generateRandomArray;
+import static pahinave.utilities.ArrayUtitilities.generateSameNumberArray;
+import static pahinave.utilities.ArrayUtitilities.printArray;
 
 public class SortTester {
 	public static void main(String[] args) {
@@ -18,7 +22,10 @@ public class SortTester {
 		//test(new MergeSort());
 		
 		// test quick sort
-		test(new QuickSort());
+		// Using random pivot
+		test(new QuickSort((start, end) -> (start + (int)(Math.random() * 10) % (end - start))));
+		// Using first element as pivot always
+		//test(new QuickSort());
 
 	}
 
