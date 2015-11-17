@@ -92,4 +92,20 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 		this.setDirected(directed);
 		return this;
 	}
+
+	@Override
+	public void addAllVertices(List<Vertex<T>> vertices) {
+		for (Vertex<T> vertex : vertices) {
+			this.addVertex(vertex);
+		}
+
+	}
+
+	@Override
+	public void addAllEdges(List<Edge<T, S>> edges) {
+		for (Edge<T, S> edge : edges) {
+			this.addEdge(edge);
+		}
+
+	}
 }

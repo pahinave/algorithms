@@ -22,4 +22,8 @@ public interface Graph<T, S> {
 
 	public Graph<T, S> setDirectedGraph(boolean directed);
 
+	public void addAllVertices(List<Vertex<T>> vertices);
+
+	public void addAllEdges(List<Edge<T, S>> edges);
+
 }
