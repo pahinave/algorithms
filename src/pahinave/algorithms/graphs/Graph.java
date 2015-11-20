@@ -17,13 +17,17 @@ public interface Graph<T, S> {
 	public List<Edge<T, S>> getEdges(Vertex<T> vertex);
 
 	public void removeEdge(Edge<T, S> edge);
+	
+	public void removeEdge(Vertex<T> from, Vertex<T> to);
 
 	public void showNeighbors();
-
-	public Graph<T, S> setDirectedGraph(boolean directed);
 
 	public void addAllVertices(List<Vertex<T>> vertices);
 
 	public void addAllEdges(List<Edge<T, S>> edges);
+	
+	public List<Edge<T, S>> findAllEdges(Vertex<T> from, Vertex<T> to);
+	
+	public List<Edge<T, S>> findEdges(Vertex<T> from, Vertex<T> to, int limit);
 
 }
