@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.BinaryOperator;
 
 public class GraphContraction<T, S> {
-	public void contract(Graph<T, S> graph, BinaryOperator<T> vertexMergeOperator, BinaryOperator<String> vertedNameMergeOperator) {
+	public void contract(Graph<T, S> graph, BinaryOperator<T> vertexObjMergeOperator, BinaryOperator<String> vertexNameMergeOperator) {
 		// while there are more than 2 vertices
 		// randomly choose edge
 		// fuse the endpoints of the edge
@@ -26,8 +26,8 @@ public class GraphContraction<T, S> {
 			Vertex<T> from = edgeToContract.getFrom();
 			Vertex<T> to = edgeToContract.getTo();
 			Vertex<T> forgedVertex = new Vertex<>(
-					vertedNameMergeOperator.apply(from.getName(),to.getName()),
-					vertexMergeOperator.apply(from.getObj(), to.getObj()));
+					vertexNameMergeOperator.apply(from.getName(),to.getName()),
+					vertexObjMergeOperator.apply(from.getObj(), to.getObj()));
 			
 			graph.addVertex(forgedVertex);
 
