@@ -18,7 +18,7 @@ public interface Graph<T, S> {
 
 	public void removeEdge(Edge<T, S> edge);
 	
-	public void removeEdge(Vertex<T> from, Vertex<T> to);
+	public void removeEdges(Vertex<T> from, Vertex<T> to);
 
 	public void showNeighbors();
 
@@ -29,5 +29,7 @@ public interface Graph<T, S> {
 	public List<Edge<T, S>> findAllEdges(Vertex<T> from, Vertex<T> to);
 	
 	public List<Edge<T, S>> findEdges(Vertex<T> from, Vertex<T> to, int limit);
+	
+	public void removeVertex(Vertex<T> vertex);
 
 }

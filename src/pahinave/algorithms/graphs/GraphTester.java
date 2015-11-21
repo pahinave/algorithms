@@ -9,11 +9,8 @@ public class GraphTester {
 	}
 
 	private static void testAdjacencyGraph() {
-		Graph<Integer, Integer> graph = null;
-		graph = testGraph(true);
-		graph = testGraph(false);
-		
-
+		testGraph(true);
+		//testGraph(false);
 	}
 
 	private static Graph<Integer, Integer> testGraph(boolean directed) {
@@ -29,28 +26,36 @@ public class GraphTester {
 		Vertex<Integer> v5 = graph.addVertex("5", weight.nextInt(10));
 
 		graph.addEdge(new Edge<>(v1, v2, weight.nextInt(10)));
+		
+		Edge<Integer,Integer> edge1 = new Edge<>(v1, v4, weight.nextInt(10));
+		graph.addEdge(edge1);
+		
+		graph.addEdge(new Edge<>(v1, v1, weight.nextInt(10)));
+		graph.addEdge(new Edge<>(v1, v1, weight.nextInt(10)));
+		graph.addEdge(new Edge<>(v1, v3, weight.nextInt(10)));
 		graph.addEdge(new Edge<>(v1, v4, weight.nextInt(10)));
-		graph.addEdge(new Edge<>(v1, v1, weight.nextInt(10)));
-		graph.addEdge(new Edge<>(v1, v1, weight.nextInt(10)));
 		graph.addEdge(new Edge<>(v2, v3, weight.nextInt(10)));
 		graph.addEdge(new Edge<>(v3, v4, weight.nextInt(10)));
+		graph.addEdge(new Edge<>(v3, v4, weight.nextInt(10)));
+		graph.addEdge(new Edge<>(v4, v3, weight.nextInt(10)));
 		graph.addEdge(new Edge<>(v4, v1, weight.nextInt(10)));
-		graph.addEdge(new Edge<>(v1, v3, weight.nextInt(10)));
 		graph.addEdge(new Edge<>(v4, v2, weight.nextInt(10)));
 		graph.addEdge(new Edge<>(v4, v5, weight.nextInt(10)));
 
 		graph.showNeighbors();
-		
-		System.out.println("Edges between vertices v1 and v4");
-		for(Edge<Integer, Integer> edge : graph.findAllEdges(v1, v4)) {
-			System.out.println(edge);
-		}
 
-		System.out.println("Edges between vertices v1 and v1");
-		for(Edge<Integer, Integer> edge : graph.findAllEdges(v1, v1)) {
-			System.out.println(edge);
-		}
+		// remove edges between v1 and v4
+		graph.removeEdge(edge1);
+		graph.showNeighbors();
 		
+		graph.removeEdges(v1, v1);
+		graph.showNeighbors();
+		
+		graph.removeEdges(v3, v4);
+		graph.showNeighbors();
+		
+		graph.removeVertex(v2);
+		graph.showNeighbors();
 		return graph;
 	}
 
