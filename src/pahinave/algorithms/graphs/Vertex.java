@@ -33,7 +33,7 @@ public class Vertex<T> {
 
 	@Override
 	public String toString() {
-		return "[V " + name + " " + obj + "]";
+		return "[V " + name + " w" + obj + "]";
 	}
 
 }

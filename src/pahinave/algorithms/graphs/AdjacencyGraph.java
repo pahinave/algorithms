@@ -87,16 +87,17 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 		// TODO set vertex refereces to null or else object
 		// may not get released
 		adjList.get(edge.getFrom()).remove(edge);
-		System.out.println("removed from" + edge.getFrom());
+		//System.out.println("removed from" + edge.getFrom());
 		if (edge.getFrom() != edge.getTo()) {
 			if (!directed) {
 				adjList.get(edge.getTo()).remove(edge);
-				System.out.println("removed to not directed" + edge.getTo());
+				//System.out.println("removed to not directed" + edge.getTo());
 			} else if (directed) {
-				System.out.println("removed to incoming" + edge.getFrom());
+				//System.out.println("removed to incoming" + edge.getFrom());
 				incomingEdgeList.get(edge.getTo()).remove(edge);
 			}
 		}
+		
 		edges.remove(edge);
 	}
 
@@ -108,8 +109,8 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 	}
 
 	@Override
-	public void showNeighbors() {
-		System.out.println("Neighbors in adjacency graph");
+	public void showVertexEdgesView() {
+		System.out.println("Vertex - Edges view");
 		for (Map.Entry<Vertex<T>, List<Edge<T, S>>> entry : adjList.entrySet()) {
 
 			System.out.println(entry.getKey());
@@ -177,7 +178,7 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 	public void removeVertex(Vertex<T> vertex) {
 		List<Edge<T, S>> edgesToRemove = new ArrayList<>(adjList.get(vertex));
 		if (directed) {
-			edgesToRemove.addAll(incomingEdgeList.get(vertex));
+			edgesToRemove.addAll(incomingEdgeList.computeIfAbsent(vertex, v -> Collections.<Edge<T, S>>emptyList()));
 		}
 
 		for (Edge<T, S> edge : edgesToRemove) {
@@ -189,6 +190,29 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 		if(directed) {
 			incomingEdgeList.remove(vertex);
 		}
+	}
+
+	@Override
+	public int vertexCount() {
+		return adjList.size();
+	}
+
+	@Override
+	public int edgeCount() {
+		return edges.size();
+	}
+
+	@Override
+	public List<Edge<T, S>> getAllEdges() {
+		return Collections.unmodifiableList(edges);
+	}
+
+	@Override
+	public List<Edge<T, S>> getIncomingDirectedEdges(Vertex<T> vertex) {
+		if(directed) {
+			return incomingEdgeList.computeIfAbsent(vertex, v -> Collections.<Edge<T, S>>emptyList());
+		}
+		return Collections.<Edge<T, S>>emptyList();
 	}
 
 }

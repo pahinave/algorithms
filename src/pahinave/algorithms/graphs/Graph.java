@@ -20,7 +20,7 @@ public interface Graph<T, S> {
 	
 	public void removeEdges(Vertex<T> from, Vertex<T> to);
 
-	public void showNeighbors();
+	public void showVertexEdgesView();
 
 	public void addAllVertices(List<Vertex<T>> vertices);
 
@@ -31,5 +31,15 @@ public interface Graph<T, S> {
 	public List<Edge<T, S>> findEdges(Vertex<T> from, Vertex<T> to, int limit);
 	
 	public void removeVertex(Vertex<T> vertex);
+	
+	public int vertexCount();
+	
+	public int edgeCount();
+	
+	public List<Edge<T, S>> getAllEdges();
+	
+	public boolean isDirected();
+	
+	public List<Edge<T, S>> getIncomingDirectedEdges(Vertex<T> vertex);
 
 }
