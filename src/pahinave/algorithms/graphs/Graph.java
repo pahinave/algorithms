@@ -1,6 +1,7 @@
 package pahinave.algorithms.graphs;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Graph<T, S> {
 
@@ -49,5 +50,7 @@ public interface Graph<T, S> {
 	public void unexploreAll();
 	public void unexploreVertices();
 	public void unexploreEdges();
+	
+	public Map<Vertex<T>, Integer> shortestPaths(Vertex<T> start);
 
 }

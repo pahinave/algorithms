@@ -36,7 +36,7 @@ public class Edge<T, S> {
 	public Edge(Vertex<T> from, Vertex<T> to, S obj) {
 		this(from, to, obj, false);
 	}
-	
+
 	public Edge(Vertex<T> from, Vertex<T> to, S obj, boolean directed) {
 		super();
 		this.from = new WeakReference<Vertex<T>>(from);
@@ -48,7 +48,7 @@ public class Edge<T, S> {
 	public Edge(Vertex<T> from, Vertex<T> to) {
 		this(from, to, false);
 	}
-	
+
 	public Edge(Vertex<T> from, Vertex<T> to, boolean directed) {
 		super();
 		this.from = new WeakReference<Vertex<T>>(from);
@@ -60,20 +60,20 @@ public class Edge<T, S> {
 	public String toString() {
 		return "[E " + from.get() + (directed ? "->" : "-") + to.get() + " w" + obj + "]";
 	}
-	
+
 	public boolean isSelfLoop() {
 		return from == to;
 	}
-	
+
 	public Vertex<T> getTo(Vertex<T> from) {
 		// if condition is applicable for both
 		// directed and undirected graphs
-		if(this.getFrom() == from)
+		if (this.getFrom() == from)
 			return this.getTo();
-		else if(!directed && this.getTo() == from) {
+		else if (!directed && this.getTo() == from) {
 			return this.getFrom();
 		}
-		
+
 		return null;
 	}
 
@@ -96,7 +96,20 @@ public class Edge<T, S> {
 	public void setTo(WeakReference<Vertex<T>> to) {
 		this.to = to;
 	}
-	
-	
 
+	public boolean isNotExplored() {
+		return !explored;
+	}
+
+	public void setExplored() {
+		this.explored = true;
+	}
+
+	public void markExplored() {
+		this.explored = true;
+	}
+
+	public void unExplore() {
+		this.explored = false;
+	}
 }

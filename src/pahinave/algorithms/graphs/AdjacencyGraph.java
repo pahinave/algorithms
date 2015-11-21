@@ -232,10 +232,10 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 		LinkedList<Vertex<T>> queue = new LinkedList<>();
 
 		// reset explore status of edges and vertices
-		this.unexploreVertices();
+		this.unexploreAll();
 
 		// visit start
-		start.setExplored(true);
+		start.markExplored();
 		queue.add(start);
 
 		while (queue.isEmpty() == false) {
@@ -243,17 +243,22 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 			visitOrder.add(nextVertexToVisit);
 
 			for (Edge<T, S> edge : this.getEdges(nextVertexToVisit)) {
+				if (edge.isExplored()) {
+					continue;
+				} else {
+					edge.markExplored();
+				}
 				// no need to check for null,
 				// as the from vertex is taken from edge
 				Vertex<T> otherEnd = edge.getTo(nextVertexToVisit);
-				if (otherEnd.isExplored() == false) {
-					otherEnd.setExplored(true);
+				if (otherEnd.isNotExplored()) {
+					otherEnd.markExplored();
 					queue.addLast(otherEnd);
 				}
 			}
 		}
 
-		this.unexploreVertices();
+		this.unexploreAll();
 		return visitOrder;
 	}
 
@@ -266,16 +271,53 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 	@Override
 	public void unexploreVertices() {
 		for (Vertex<T> v : this.adjList.keySet()) {
-			v.setExplored(false);
+			v.unExplore();
 		}
 	}
 
 	@Override
 	public void unexploreEdges() {
 		for (Edge<T, S> edge : this.getAllEdges()) {
-			edge.setExplored(false);
+			edge.unExplore();
 		}
 
+	}
+
+	@Override
+	public Map<Vertex<T>, Integer> shortestPaths(Vertex<T> start) {
+		Map<Vertex<T>, Integer> shortedPathDistances = new HashMap<>();
+		LinkedList<Vertex<T>> queue = new LinkedList<>();
+
+		// reset explore status of edges and vertices
+		this.unexploreAll();
+
+		// visit start
+		start.markExplored();
+		queue.add(start);
+		shortedPathDistances.put(start, 0);
+
+		while (queue.isEmpty() == false) {
+			Vertex<T> nextVertexToVisit = queue.removeFirst();
+
+			for (Edge<T, S> edge : this.getEdges(nextVertexToVisit)) {
+				if (edge.isExplored()) {
+					continue;
+				} else {
+					edge.markExplored();
+				}
+				// no need to check for null,
+				// as the from vertex is taken from edge
+				Vertex<T> otherEnd = edge.getTo(nextVertexToVisit);
+				if (otherEnd.isNotExplored()) {
+					shortedPathDistances.put(otherEnd, shortedPathDistances.get(nextVertexToVisit) + 1);
+					otherEnd.markExplored();
+					queue.addLast(otherEnd);
+				}
+			}
+		}
+
+		this.unexploreAll();
+		return shortedPathDistances;
 	}
 
 }

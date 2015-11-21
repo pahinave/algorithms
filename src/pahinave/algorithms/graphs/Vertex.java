@@ -44,7 +44,17 @@ public class Vertex<T> {
 	public void setExplored(boolean explored) {
 		this.explored = explored;
 	}
-	
-	
+
+	public boolean isNotExplored() {
+		return !explored;
+	}
+
+	public void markExplored() {
+		this.explored = true;
+	}
+
+	public void unExplore() {
+		this.explored = false;
+	}
 
 }
