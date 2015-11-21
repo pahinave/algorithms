@@ -1,8 +1,9 @@
 package pahinave.algorithms.graphs;
 
 public class Vertex<T> {
-	String name;
-	T obj;
+	private String name;
+	private T obj;
+	private boolean explored;
 
 	public String getName() {
 		return name;
@@ -35,5 +36,15 @@ public class Vertex<T> {
 	public String toString() {
 		return "[V " + name + " w" + obj + "]";
 	}
+
+	public boolean isExplored() {
+		return explored;
+	}
+
+	public void setExplored(boolean explored) {
+		this.explored = explored;
+	}
+	
+	
 
 }

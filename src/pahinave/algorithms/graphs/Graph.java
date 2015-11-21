@@ -41,5 +41,13 @@ public interface Graph<T, S> {
 	public boolean isDirected();
 	
 	public List<Edge<T, S>> getIncomingDirectedEdges(Vertex<T> vertex);
+	
+	public List<Vertex<T>> bfs(Vertex<T> start);
+	
+	public List<Vertex<T>> dfs(Vertex<T> start);
+	
+	public void unexploreAll();
+	public void unexploreVertices();
+	public void unexploreEdges();
 
 }

@@ -3,10 +3,11 @@ package pahinave.algorithms.graphs;
 import java.lang.ref.WeakReference;
 
 public class Edge<T, S> {
-	WeakReference<Vertex<T>> from;
-	WeakReference<Vertex<T>> to;
-	S obj;
-	final boolean directed;
+	private WeakReference<Vertex<T>> from;
+	private WeakReference<Vertex<T>> to;
+	private S obj;
+	private final boolean directed;
+	private boolean explored;
 
 	public Vertex<T> getFrom() {
 		return from.get();
@@ -63,5 +64,39 @@ public class Edge<T, S> {
 	public boolean isSelfLoop() {
 		return from == to;
 	}
+	
+	public Vertex<T> getTo(Vertex<T> from) {
+		// if condition is applicable for both
+		// directed and undirected graphs
+		if(this.getFrom() == from)
+			return this.getTo();
+		else if(!directed && this.getTo() == from) {
+			return this.getFrom();
+		}
+		
+		return null;
+	}
+
+	public boolean isExplored() {
+		return explored;
+	}
+
+	public void setExplored(boolean explored) {
+		this.explored = explored;
+	}
+
+	public boolean isDirected() {
+		return directed;
+	}
+
+	public void setFrom(WeakReference<Vertex<T>> from) {
+		this.from = from;
+	}
+
+	public void setTo(WeakReference<Vertex<T>> to) {
+		this.to = to;
+	}
+	
+	
 
 }

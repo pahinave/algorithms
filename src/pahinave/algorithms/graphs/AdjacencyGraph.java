@@ -3,8 +3,10 @@ package pahinave.algorithms.graphs;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -87,17 +89,17 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 		// TODO set vertex refereces to null or else object
 		// may not get released
 		adjList.get(edge.getFrom()).remove(edge);
-		//System.out.println("removed from" + edge.getFrom());
+		// System.out.println("removed from" + edge.getFrom());
 		if (edge.getFrom() != edge.getTo()) {
 			if (!directed) {
 				adjList.get(edge.getTo()).remove(edge);
-				//System.out.println("removed to not directed" + edge.getTo());
+				// System.out.println("removed to not directed" + edge.getTo());
 			} else if (directed) {
-				//System.out.println("removed to incoming" + edge.getFrom());
+				// System.out.println("removed to incoming" + edge.getFrom());
 				incomingEdgeList.get(edge.getTo()).remove(edge);
 			}
 		}
-		
+
 		edges.remove(edge);
 	}
 
@@ -178,16 +180,16 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 	public void removeVertex(Vertex<T> vertex) {
 		List<Edge<T, S>> edgesToRemove = new ArrayList<>(adjList.get(vertex));
 		if (directed) {
-			edgesToRemove.addAll(incomingEdgeList.computeIfAbsent(vertex, v -> Collections.<Edge<T, S>>emptyList()));
+			edgesToRemove.addAll(incomingEdgeList.computeIfAbsent(vertex, v -> Collections.<Edge<T, S>> emptyList()));
 		}
 
 		for (Edge<T, S> edge : edgesToRemove) {
 			removeEdge(edge);
 		}
-		
+
 		vertexNameMap.remove(vertex);
 		adjList.remove(vertex);
-		if(directed) {
+		if (directed) {
 			incomingEdgeList.remove(vertex);
 		}
 	}
@@ -209,10 +211,71 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 
 	@Override
 	public List<Edge<T, S>> getIncomingDirectedEdges(Vertex<T> vertex) {
-		if(directed) {
-			return incomingEdgeList.computeIfAbsent(vertex, v -> Collections.<Edge<T, S>>emptyList());
+		if (directed) {
+			return incomingEdgeList.computeIfAbsent(vertex, v -> Collections.<Edge<T, S>> emptyList());
 		}
-		return Collections.<Edge<T, S>>emptyList();
+		return Collections.<Edge<T, S>> emptyList();
+	}
+
+	@Override
+	public List<Vertex<T>> bfs(Vertex<T> start) {
+		return bfsAndDfs(start, q -> q.removeFirst());
+	}
+
+	@Override
+	public List<Vertex<T>> dfs(Vertex<T> start) {
+		return bfsAndDfs(start, q -> q.removeLast());
+	}
+
+	public List<Vertex<T>> bfsAndDfs(Vertex<T> start, Function<LinkedList<Vertex<T>>, Vertex<T>> nextVertexSelector) {
+		List<Vertex<T>> visitOrder = new LinkedList<>();
+		LinkedList<Vertex<T>> queue = new LinkedList<>();
+
+		// reset explore status of edges and vertices
+		this.unexploreVertices();
+
+		// visit start
+		start.setExplored(true);
+		queue.add(start);
+
+		while (queue.isEmpty() == false) {
+			Vertex<T> nextVertexToVisit = nextVertexSelector.apply(queue);
+			visitOrder.add(nextVertexToVisit);
+
+			for (Edge<T, S> edge : this.getEdges(nextVertexToVisit)) {
+				// no need to check for null,
+				// as the from vertex is taken from edge
+				Vertex<T> otherEnd = edge.getTo(nextVertexToVisit);
+				if (otherEnd.isExplored() == false) {
+					otherEnd.setExplored(true);
+					queue.addLast(otherEnd);
+				}
+			}
+		}
+
+		this.unexploreVertices();
+		return visitOrder;
+	}
+
+	@Override
+	public void unexploreAll() {
+		unexploreEdges();
+		unexploreVertices();
+	}
+
+	@Override
+	public void unexploreVertices() {
+		for (Vertex<T> v : this.adjList.keySet()) {
+			v.setExplored(false);
+		}
+	}
+
+	@Override
+	public void unexploreEdges() {
+		for (Edge<T, S> edge : this.getAllEdges()) {
+			edge.setExplored(false);
+		}
+
 	}
 
 }
