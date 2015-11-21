@@ -52,5 +52,7 @@ public interface Graph<T, S> {
 	public void unexploreEdges();
 	
 	public Map<Vertex<T>, Integer> shortestPaths(Vertex<T> start);
+	
+	public List<List<Vertex<T>>> findConnectedComponents();
 
 }

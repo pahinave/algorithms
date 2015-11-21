@@ -219,20 +219,35 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 
 	@Override
 	public List<Vertex<T>> bfs(Vertex<T> start) {
-		return bfsAndDfs(start, q -> q.removeFirst());
+		this.unexploreAll();
+		List<Vertex<T>> list = bfsAndDfs(start, q -> q.removeFirst());
+		this.unexploreAll();
+		return list;
 	}
 
 	@Override
 	public List<Vertex<T>> dfs(Vertex<T> start) {
-		return bfsAndDfs(start, q -> q.removeLast());
+		this.unexploreAll();
+		List<Vertex<T>> list = bfsAndDfs(start, q -> q.removeLast());
+		this.unexploreAll();
+		return list;
 	}
 
-	public List<Vertex<T>> bfsAndDfs(Vertex<T> start, Function<LinkedList<Vertex<T>>, Vertex<T>> nextVertexSelector) {
+	public List<List<Vertex<T>>> findConnectedComponents() {
+		List<List<Vertex<T>>> list = new ArrayList<>();
+		this.unexploreAll();
+		for (Vertex<T> vertex : adjList.keySet()) {
+			if (vertex.isNotExplored()) {
+				list.add(bfsAndDfs(vertex, q -> q.removeFirst()));
+			}
+		}
+		this.unexploreAll();
+		return list;
+	}
+
+	private List<Vertex<T>> bfsAndDfs(Vertex<T> start, Function<LinkedList<Vertex<T>>, Vertex<T>> nextVertexSelector) {
 		List<Vertex<T>> visitOrder = new LinkedList<>();
 		LinkedList<Vertex<T>> queue = new LinkedList<>();
-
-		// reset explore status of edges and vertices
-		this.unexploreAll();
 
 		// visit start
 		start.markExplored();
@@ -258,7 +273,6 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 			}
 		}
 
-		this.unexploreAll();
 		return visitOrder;
 	}
 
