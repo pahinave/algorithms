@@ -54,5 +54,7 @@ public interface Graph<T, S> {
 	public Map<Vertex<T>, Integer> shortestPaths(Vertex<T> start);
 	
 	public List<List<Vertex<T>>> findConnectedComponents();
+	
+	public List<Vertex<T>> topologicalSort();
 
 }

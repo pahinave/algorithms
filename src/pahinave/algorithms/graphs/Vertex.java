@@ -34,7 +34,7 @@ public class Vertex<T> {
 
 	@Override
 	public String toString() {
-		return "[V " + name + " w" + obj + "]";
+		return "[V " + name + (obj == null ? "" : " w" + obj) + "]";
 	}
 
 	public boolean isExplored() {

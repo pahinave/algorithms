@@ -58,7 +58,7 @@ public class Edge<T, S> {
 
 	@Override
 	public String toString() {
-		return "[E " + from.get() + (directed ? "->" : "-") + to.get() + " w" + obj + "]";
+		return "[E " + from.get() + (directed ? "->" : "-") + to.get() + (obj == null ? "" : " w" + obj) + "]";
 	}
 
 	public boolean isSelfLoop() {

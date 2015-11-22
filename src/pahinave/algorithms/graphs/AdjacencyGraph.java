@@ -334,4 +334,41 @@ public class AdjacencyGraph<T, S> implements Graph<T, S> {
 		return shortedPathDistances;
 	}
 
+	// topological sort not appliable for undirected graph
+	@Override
+	public List<Vertex<T>> topologicalSort() {
+		if(!directed) { 
+			return null;
+		}
+		
+		LinkedList<Vertex<T>> sorted = new LinkedList<>();
+
+		int n = adjList.size();
+		unexploreAll();
+		for (Vertex<T> v : adjList.keySet()) {
+			if (v.isNotExplored()) {
+				n = topologicalSortLoop(v, sorted, n);
+			}
+		}
+		unexploreAll();
+		return sorted;
+	}
+
+	private int topologicalSortLoop(Vertex<T> v, LinkedList<Vertex<T>> sorted, int n) {
+		v.markExplored();
+		
+		for (Edge<T, S> edge : adjList.get(v)) {
+			if (edge.isNotExplored()) {
+				edge.markExplored();
+				Vertex<T> otherEnd = edge.getTo(v);
+				if (otherEnd.isNotExplored()) {
+					n = topologicalSortLoop(otherEnd, sorted, n);
+				}
+			}
+		}
+		
+		sorted.addFirst(v);
+		return n - 1;
+	}
+
 }
