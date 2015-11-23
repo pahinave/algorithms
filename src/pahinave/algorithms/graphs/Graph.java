@@ -3,7 +3,7 @@ package pahinave.algorithms.graphs;
 import java.util.List;
 import java.util.Map;
 
-public interface Graph<T, S> {
+public interface Graph<T, S extends Comparable<S>> {
 
 	public void addVertex(Vertex<T> vertex);
 

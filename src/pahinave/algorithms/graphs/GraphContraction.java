@@ -3,7 +3,7 @@ package pahinave.algorithms.graphs;
 import java.util.List;
 import java.util.function.BinaryOperator;
 
-public class GraphContraction<T, S> {
+public class GraphContraction<T, S extends Comparable<S>> {
 	public void contract(Graph<T, S> graph, BinaryOperator<T> vertexObjMergeOperator, BinaryOperator<String> vertexNameMergeOperator) {
 		// while there are more than 2 vertices
 		// randomly choose edge
@@ -27,7 +27,7 @@ public class GraphContraction<T, S> {
 			Vertex<T> to = edgeToContract.getTo();
 			Vertex<T> forgedVertex = new Vertex<>(
 					vertexNameMergeOperator.apply(from.getName(),to.getName()),
-					vertexObjMergeOperator.apply(from.getObj(), to.getObj()));
+					vertexObjMergeOperator.apply(from.getTag(), to.getTag()));
 			
 			graph.addVertex(forgedVertex);
 
@@ -40,7 +40,7 @@ public class GraphContraction<T, S> {
 						continue;
 
 					if (edge.getFrom() == from && edge.getTo() != to) {
-						graph.addEdge(new Edge<>(forgedVertex, edge.getTo(), edge.getObj()));
+						graph.addEdge(new Edge<>(forgedVertex, edge.getTo(), edge.getTag()));
 					}
 
 				}
@@ -50,7 +50,7 @@ public class GraphContraction<T, S> {
 						continue;
 
 					if (edge.getFrom() == to && edge.getTo() != from) {
-						graph.addEdge(new Edge<>(forgedVertex, edge.getTo(), edge.getObj()));
+						graph.addEdge(new Edge<>(forgedVertex, edge.getTo(), edge.getTag()));
 					}
 				}
 				
@@ -59,7 +59,7 @@ public class GraphContraction<T, S> {
 						continue;
 
 					if(edge.getFrom() != to) {
-						graph.addEdge(new Edge<>(edge.getFrom(), forgedVertex, edge.getObj()));
+						graph.addEdge(new Edge<>(edge.getFrom(), forgedVertex, edge.getTag()));
 					}
 
 				}
@@ -69,7 +69,7 @@ public class GraphContraction<T, S> {
 						continue;
 
 					if(edge.getFrom() != from) {
-						graph.addEdge(new Edge<>(edge.getFrom(), forgedVertex, edge.getObj()));
+						graph.addEdge(new Edge<>(edge.getFrom(), forgedVertex, edge.getTag()));
 					}
 
 				}
@@ -83,7 +83,7 @@ public class GraphContraction<T, S> {
 					}
 					
 					if(OtherEnd != to) {
-						graph.addEdge(new Edge<>(forgedVertex, OtherEnd, edge.getObj()));
+						graph.addEdge(new Edge<>(forgedVertex, OtherEnd, edge.getTag()));
 					}
 				}
 				
@@ -94,7 +94,7 @@ public class GraphContraction<T, S> {
 					}
 					
 					if(OtherEnd != from) {
-						graph.addEdge(new Edge<>(forgedVertex, OtherEnd, edge.getObj()));
+						graph.addEdge(new Edge<>(forgedVertex, OtherEnd, edge.getTag()));
 					}
 				}
 			}

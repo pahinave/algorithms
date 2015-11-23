@@ -10,7 +10,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class AdjacencyGraph<T, S> implements Graph<T, S> {
+public class AdjacencyGraph<T, S extends Comparable<S>> implements Graph<T, S> {
 	// TODO: should vertex name be key?
 	// will it improve the lookup time by reducing the hash value generation
 	Map<Vertex<T>, List<Edge<T, S>>> adjList;

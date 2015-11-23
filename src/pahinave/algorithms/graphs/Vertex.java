@@ -2,7 +2,7 @@ package pahinave.algorithms.graphs;
 
 public class Vertex<T> {
 	private String name;
-	private T obj;
+	private T tag;
 	private boolean explored;
 
 	public String getName() {
@@ -13,18 +13,18 @@ public class Vertex<T> {
 		this.name = name;
 	}
 
-	public T getObj() {
-		return obj;
+	public T getTag() {
+		return tag;
 	}
 
-	public void setObj(T obj) {
-		this.obj = obj;
+	public void setTag(T obj) {
+		this.tag = obj;
 	}
 
 	public Vertex(String name, T obj) {
 		super();
 		this.name = name;
-		this.obj = obj;
+		this.tag = obj;
 	}
 
 	public Vertex(String name) {
@@ -34,7 +34,7 @@ public class Vertex<T> {
 
 	@Override
 	public String toString() {
-		return "[V " + name + (obj == null ? "" : " w" + obj) + "]";
+		return "[V " + name + (tag == null ? "" : " w" + tag) + "]";
 	}
 
 	public boolean isExplored() {

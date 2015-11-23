@@ -2,10 +2,10 @@ package pahinave.algorithms.graphs;
 
 import java.lang.ref.WeakReference;
 
-public class Edge<T, S> {
+public class Edge<T, S extends Comparable<S>> {
 	private WeakReference<Vertex<T>> from;
 	private WeakReference<Vertex<T>> to;
-	private S obj;
+	private S tag;
 	private final boolean directed;
 	private boolean explored;
 
@@ -25,12 +25,12 @@ public class Edge<T, S> {
 		this.to = new WeakReference<Vertex<T>>(to);
 	}
 
-	public S getObj() {
-		return obj;
+	public S getTag() {
+		return tag;
 	}
 
-	public void setObj(S obj) {
-		this.obj = obj;
+	public void setTag(S tag) {
+		this.tag = tag;
 	}
 
 	public Edge(Vertex<T> from, Vertex<T> to, S obj) {
@@ -41,7 +41,7 @@ public class Edge<T, S> {
 		super();
 		this.from = new WeakReference<Vertex<T>>(from);
 		this.to = new WeakReference<Vertex<T>>(to);
-		this.obj = obj;
+		this.tag = obj;
 		this.directed = directed;
 	}
 
@@ -58,7 +58,7 @@ public class Edge<T, S> {
 
 	@Override
 	public String toString() {
-		return "[E " + from.get() + (directed ? "->" : "-") + to.get() + (obj == null ? "" : " w" + obj) + "]";
+		return "[E " + from.get() + (directed ? "->" : "-") + to.get() + (tag == null ? "" : " w" + tag) + "]";
 	}
 
 	public boolean isSelfLoop() {
