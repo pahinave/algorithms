@@ -1,10 +1,10 @@
-package pahinave.algorithms.searching.tests;
+package pahinave.algorithms.trees.tests;
 
 import java.util.Random;
 
 import org.junit.Test;
 
-import pahinave.algorithms.searching.BinarySearchTree;
+import pahinave.algorithms.trees.BinarySearchTree;
 
 public class BinarySearchTreeTests {
 	@Test

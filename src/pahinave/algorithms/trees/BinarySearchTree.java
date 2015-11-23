@@ -1,4 +1,4 @@
-package pahinave.algorithms.searching;
+package pahinave.algorithms.trees;
 
 public class BinarySearchTree<T extends Comparable<T>> {
 	Node root;
