@@ -172,8 +172,6 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 	}
 
-	// TODO: find predecessor
-
 	public Node maximum() {
 		if (root == null) {
 			return null;

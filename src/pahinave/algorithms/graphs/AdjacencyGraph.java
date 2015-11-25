@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -369,6 +370,11 @@ public class AdjacencyGraph<T, S extends Comparable<S>> implements Graph<T, S> {
 		
 		sorted.addFirst(v);
 		return n - 1;
+	}
+
+	@Override
+	public Set<Vertex<T>> vertices() {
+		return Collections.unmodifiableSet(adjList.keySet());
 	}
 
 }

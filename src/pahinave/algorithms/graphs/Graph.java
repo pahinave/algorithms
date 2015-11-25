@@ -2,6 +2,7 @@ package pahinave.algorithms.graphs;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface Graph<T, S extends Comparable<S>> {
 
@@ -56,5 +57,7 @@ public interface Graph<T, S extends Comparable<S>> {
 	public List<List<Vertex<T>>> findConnectedComponents();
 	
 	public List<Vertex<T>> topologicalSort();
+	
+	public Set<Vertex<T>> vertices();
 
 }

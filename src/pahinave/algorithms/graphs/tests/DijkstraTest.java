@@ -9,6 +9,7 @@ import pahinave.algorithms.graphs.AdjacencyGraph;
 import pahinave.algorithms.graphs.Dijkstra;
 import pahinave.algorithms.graphs.Edge;
 import pahinave.algorithms.graphs.Graph;
+import pahinave.algorithms.graphs.PathInfo;
 import pahinave.algorithms.graphs.Vertex;
 
 public class DijkstraTest {
@@ -33,9 +34,9 @@ public class DijkstraTest {
 		graph.showVertexEdgesView();
 
 		Dijkstra<Integer, Integer> dijkstra = new Dijkstra<>();
-		HashMap<Vertex<Integer>, Dijkstra<Integer, Integer>.PathInfo> shortestPaths = dijkstra
-				.singleSourceShortedPath(graph, v1, Integer.valueOf(0), Integer::sum);
-		for (Entry<Vertex<Integer>, Dijkstra<Integer, Integer>.PathInfo> entry : shortestPaths.entrySet()) {
+		HashMap<Vertex<Integer>, PathInfo<Integer, Integer>> shortestPaths = dijkstra.singleSourceShortedPath(graph, v1,
+				Integer.valueOf(0), Integer::sum);
+		for (Entry<Vertex<Integer>, PathInfo<Integer, Integer>> entry : shortestPaths.entrySet()) {
 			System.out.println(entry.getValue());
 		}
 	}
