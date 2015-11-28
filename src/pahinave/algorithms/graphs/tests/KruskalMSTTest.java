@@ -36,7 +36,7 @@ public class KruskalMSTTest {
 		graph.addEdge(new Edge<>(v4, v3, 5));
 
 		KruskalMST p = new KruskalMST();
-		Graph<Integer, Integer> mst = p.slowMst(graph, v1);
+		Graph<Integer, Integer> mst = p.mst(graph, v1);
 		Assert.assertNotNull(mst);
 
 		mst.showVertexEdgesView();
@@ -67,7 +67,7 @@ public class KruskalMSTTest {
 		graph.addEdge(new Edge<>(v4, v3, 5));
 
 		KruskalMST p = new KruskalMST();
-		Graph<Integer, Integer> mst = p.slowMst(graph, v1);
+		Graph<Integer, Integer> mst = p.mst(graph, v1);
 
 		Assert.assertNotNull(mst);
 		mst.showVertexEdgesView();
@@ -84,7 +84,7 @@ public class KruskalMSTTest {
 		Vertex<Integer> v1 = graph.addVertex("one");
 
 		KruskalMST m = new KruskalMST();
-		Graph<Integer, Integer> mst = m.slowMst(graph, v1);
+		Graph<Integer, Integer> mst = m.mst(graph, v1);
 
 		assertNull(mst);
 	}
@@ -122,7 +122,7 @@ public class KruskalMSTTest {
 		graph.showVertexEdgesView();
 
 		KruskalMST m = new KruskalMST();
-		Graph<Integer, Integer> result = m.slowMst(graph, a);
+		Graph<Integer, Integer> result = m.mst(graph, a);
 		System.out.println("===== Minimum Spanning tree =====");
 		result.showVertexEdgesView(true);
 
@@ -137,6 +137,37 @@ public class KruskalMSTTest {
 		assertEquals(true, resultEdges.contains(edgeEH));
 		assertEquals(true, resultEdges.contains(edgeHF));
 		assertEquals(true, resultEdges.contains(edgeGF));
+
+	}
+
+	@Test
+	public void testLineGraph() throws Exception {
+
+		Graph<Integer, Integer> graph = new AdjacencyGraph<>();
+
+		Vertex<Integer> a = new Vertex<>("A");
+		Vertex<Integer> b = new Vertex<>("B");
+		Vertex<Integer> c = new Vertex<>("C");
+		Vertex<Integer> d = new Vertex<>("D");
+
+		Edge<Integer, Integer> edgeAB = graph.addEdge(new Edge<>(a, b, 1));
+		Edge<Integer, Integer> edgeBC = graph.addEdge(new Edge<>(b, c, 3));
+		Edge<Integer, Integer> edgeCD = graph.addEdge(new Edge<>(c, d, 2));
+
+		graph.showVertexEdgesView();
+
+		KruskalMST m = new KruskalMST();
+		Graph<Integer, Integer> result = m.mst(graph, a);
+		System.out.println("===== Minimum Spanning tree FAIL =====");
+		result.showVertexEdgesView(true);
+
+		assertEquals(graph.vertexCount(), result.vertexCount());
+
+		List<Edge<Integer, Integer>> resultEdges = result.getAllEdges();
+		assertEquals(graph.vertexCount() - 1, resultEdges.size());
+		assertEquals(true, resultEdges.contains(edgeAB));
+		assertEquals(true, resultEdges.contains(edgeBC));
+		assertEquals(true, resultEdges.contains(edgeCD));
 
 	}
 }
