@@ -48,7 +48,7 @@ public class AdjacencyGraph<T, S extends Comparable<S>> implements Graph<T, S> {
 	}
 
 	@Override
-	public Edge<T,S> addEdge(Edge<T, S> edge) {
+	public Edge<T, S> addEdge(Edge<T, S> edge) {
 		List<Edge<T, S>> fromList = adjList.computeIfAbsent(edge.getFrom(), v1 -> new ArrayList<>());
 		List<Edge<T, S>> toList = adjList.computeIfAbsent(edge.getTo(), v1 -> new ArrayList<>());
 
@@ -66,7 +66,7 @@ public class AdjacencyGraph<T, S extends Comparable<S>> implements Graph<T, S> {
 				incomingList.add(edge);
 			}
 		}
-		
+
 		return edge;
 	}
 
@@ -119,7 +119,11 @@ public class AdjacencyGraph<T, S extends Comparable<S>> implements Graph<T, S> {
 
 			System.out.println(entry.getKey());
 			for (Edge<T, S> edge : entry.getValue()) {
-				if (ifVertexIsFrom && edge.getFrom() == entry.getKey()) {
+				if (ifVertexIsFrom) {
+					if (edge.getFrom() == entry.getKey()) {
+						System.out.println(edge);
+					}
+				} else {
 					System.out.println(edge);
 				}
 			}

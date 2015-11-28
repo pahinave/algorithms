@@ -50,7 +50,9 @@ public class Vertex<T> {
 	}
 
 	public void markExplored() {
-		this.explored = true;
+		if (!explored) {
+			this.explored = true;
+		}
 	}
 
 	public void unExplore() {
