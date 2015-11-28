@@ -23,7 +23,7 @@ public class KruskalMST {
 			edgeQueue.add(edge);
 		}
 
-		result.unexploreAll();
+		graph.unexploreAll();
 
 		while (edgeQueue.size() > 0) {
 			Edge<T, S> nextEdge = edgeQueue.remove();
@@ -33,6 +33,8 @@ public class KruskalMST {
 				nextEdge.getTo().markExplored();
 			}
 		}
+		
+		graph.unexploreAll();
 
 		return result;
 	}
