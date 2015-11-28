@@ -48,7 +48,7 @@ public class AdjacencyGraph<T, S extends Comparable<S>> implements Graph<T, S> {
 	}
 
 	@Override
-	public void addEdge(Edge<T, S> edge) {
+	public Edge<T,S> addEdge(Edge<T, S> edge) {
 		List<Edge<T, S>> fromList = adjList.computeIfAbsent(edge.getFrom(), v1 -> new ArrayList<>());
 		List<Edge<T, S>> toList = adjList.computeIfAbsent(edge.getTo(), v1 -> new ArrayList<>());
 
@@ -66,6 +66,8 @@ public class AdjacencyGraph<T, S extends Comparable<S>> implements Graph<T, S> {
 				incomingList.add(edge);
 			}
 		}
+		
+		return edge;
 	}
 
 	@Override
@@ -111,16 +113,22 @@ public class AdjacencyGraph<T, S extends Comparable<S>> implements Graph<T, S> {
 		return vertex;
 	}
 
-	@Override
-	public void showVertexEdgesView() {
+	public void showVertexEdgesView(boolean ifVertexIsFrom) {
 		System.out.println("Vertex - Edges view");
 		for (Map.Entry<Vertex<T>, List<Edge<T, S>>> entry : adjList.entrySet()) {
 
 			System.out.println(entry.getKey());
 			for (Edge<T, S> edge : entry.getValue()) {
-				System.out.println(edge);
+				if (ifVertexIsFrom && edge.getFrom() == entry.getKey()) {
+					System.out.println(edge);
+				}
 			}
 		}
+	}
+
+	@Override
+	public void showVertexEdgesView() {
+		showVertexEdgesView(false);
 	}
 
 	public boolean isDirected() {
@@ -338,10 +346,10 @@ public class AdjacencyGraph<T, S extends Comparable<S>> implements Graph<T, S> {
 	// topological sort not appliable for undirected graph
 	@Override
 	public List<Vertex<T>> topologicalSort() {
-		if(!directed) { 
+		if (!directed) {
 			return null;
 		}
-		
+
 		LinkedList<Vertex<T>> sorted = new LinkedList<>();
 
 		int n = adjList.size();
@@ -357,7 +365,7 @@ public class AdjacencyGraph<T, S extends Comparable<S>> implements Graph<T, S> {
 
 	private int topologicalSortLoop(Vertex<T> v, LinkedList<Vertex<T>> sorted, int n) {
 		v.markExplored();
-		
+
 		for (Edge<T, S> edge : adjList.get(v)) {
 			if (edge.isNotExplored()) {
 				edge.markExplored();
@@ -367,7 +375,7 @@ public class AdjacencyGraph<T, S extends Comparable<S>> implements Graph<T, S> {
 				}
 			}
 		}
-		
+
 		sorted.addFirst(v);
 		return n - 1;
 	}
