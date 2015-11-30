@@ -7,17 +7,17 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class HuffmanCode<T> {
-	public class FValue implements Comparable<FValue> {
+	public class TreeNode implements Comparable<TreeNode> {
 		T tag;
 		double freq;
-		FValue left;
-		FValue right;
+		TreeNode left;
+		TreeNode right;
 
-		public FValue(T tag, double freq) {
+		public TreeNode(T tag, double freq) {
 			this(tag, freq, null, null);
 		}
 
-		public FValue(T tag, double freq, FValue left, FValue right) {
+		public TreeNode(T tag, double freq, TreeNode left, TreeNode right) {
 			super();
 			this.tag = tag;
 			this.freq = freq;
@@ -41,19 +41,19 @@ public class HuffmanCode<T> {
 			this.freq = freq;
 		}
 
-		public FValue getLeft() {
+		public TreeNode getLeft() {
 			return left;
 		}
 
-		public FValue getRight() {
+		public TreeNode getRight() {
 			return right;
 		}
 
-		public void setLeft(FValue left) {
+		public void setLeft(TreeNode left) {
 			this.left = left;
 		}
 
-		public void setRight(FValue right) {
+		public void setRight(TreeNode right) {
 			this.right = right;
 		}
 
@@ -63,7 +63,7 @@ public class HuffmanCode<T> {
 		}
 
 		@Override
-		public int compareTo(HuffmanCode<T>.FValue o) {
+		public int compareTo(HuffmanCode<T>.TreeNode o) {
 			if (freq < o.getFreq())
 				return -1;
 			else if (freq > o.getFreq())
@@ -99,28 +99,28 @@ public class HuffmanCode<T> {
 	}
 
 	public Map<T, String> genCode(HashMap<T, Double> freqCount) {
-		Queue<FValue> tree = new PriorityQueue<>();
+		Queue<TreeNode> tree = new PriorityQueue<>();
 		for (Entry<T, Double> entry : freqCount.entrySet()) {
-			tree.add(new FValue(entry.getKey(), entry.getValue()));
+			tree.add(new TreeNode(entry.getKey(), entry.getValue()));
 		}
 
 		while (tree.size() > 1) {
-			FValue l = tree.remove();
-			FValue r = tree.remove();
-			tree.add(new FValue(null, l.getFreq() + r.getFreq(), l, r));
+			TreeNode l = tree.remove();
+			TreeNode r = tree.remove();
+			tree.add(new TreeNode(null, l.getFreq() + r.getFreq(), l, r));
 		}
 
 		Map<T, String> codeMap = assignCode(tree.remove());
 		return codeMap;
 	}
 
-	public Map<T, String> assignCode(FValue node) {
+	public Map<T, String> assignCode(TreeNode node) {
 		Map<T, String> codeMap = new HashMap<>();
 		assignCode(node, codeMap, "");
 		return codeMap;
 	}
 
-	private void assignCode(HuffmanCode<T>.FValue node, Map<T, String> codeMap, String parentCode) {
+	private void assignCode(HuffmanCode<T>.TreeNode node, Map<T, String> codeMap, String parentCode) {
 		if (node.getLeft() == null && node.getRight() == null) {
 			codeMap.put(node.getTag(), parentCode);
 			return;
@@ -130,29 +130,29 @@ public class HuffmanCode<T> {
 		assignCode(node.getRight(), codeMap, parentCode + "1");
 	}
 
-	public FValue getCodeTree(Map<T, String> codeMap) {
-		FValue root = new FValue(null, 0);
+	public TreeNode getCodeTree(Map<T, String> codeMap) {
+		TreeNode root = new TreeNode(null, 0);
 		for (Entry<T, String> codeEntry : codeMap.entrySet()) {
 			T tag = codeEntry.getKey();
 			String code = codeEntry.getValue();
-			FValue current = root;
+			TreeNode current = root;
 			for (int i = 0; i < code.length() - 1; i++) {
 				if (code.charAt(i) == '0') {
 					if (current.getLeft() == null) {
-						current.setLeft(new FValue(null, 0));
+						current.setLeft(new TreeNode(null, 0));
 					}
 					current = current.getLeft();
 				} else {
 					if (current.getRight() == null) {
-						current.setRight(new FValue(null, 0));
+						current.setRight(new TreeNode(null, 0));
 					}
 					current = current.getRight();
 				}
 			}
 			if (code.charAt(code.length() - 1) == '0') {
-				current.setLeft(new FValue(tag, 0));
+				current.setLeft(new TreeNode(tag, 0));
 			} else {
-				current.setRight(new FValue(tag, 0));
+				current.setRight(new TreeNode(tag, 0));
 			}
 		}
 
@@ -162,8 +162,8 @@ public class HuffmanCode<T> {
 	public void decode(Map<T, String> codeMap, String encodedMsg, T[] message) {
 
 		int msgIndex = 0;
-		FValue root = getCodeTree(codeMap);
-		FValue current = root;
+		TreeNode root = getCodeTree(codeMap);
+		TreeNode current = root;
 		for (int i = 0; i < encodedMsg.length(); i++) {
 			switch (encodedMsg.charAt(i)) {
 			case '0':
