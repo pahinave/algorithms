@@ -9,15 +9,15 @@ import java.util.Queue;
 public class HuffmanCode<T> {
 	public class TreeNode implements Comparable<TreeNode> {
 		T tag;
-		double freq;
+		int freq;
 		TreeNode left;
 		TreeNode right;
 
-		public TreeNode(T tag, double freq) {
+		public TreeNode(T tag, int freq) {
 			this(tag, freq, null, null);
 		}
 
-		public TreeNode(T tag, double freq, TreeNode left, TreeNode right) {
+		public TreeNode(T tag, int freq, TreeNode left, TreeNode right) {
 			super();
 			this.tag = tag;
 			this.freq = freq;
@@ -33,11 +33,11 @@ public class HuffmanCode<T> {
 			this.tag = tag;
 		}
 
-		public double getFreq() {
+		public int getFreq() {
 			return freq;
 		}
 
-		public void setFreq(double freq) {
+		public void setFreq(int freq) {
 			this.freq = freq;
 		}
 
@@ -75,18 +75,12 @@ public class HuffmanCode<T> {
 	}
 
 	public Map<T, String> genCode(T[] input) {
-		HashMap<T, Integer> tCount = new HashMap<>();
+		HashMap<T, Integer> freqCount = new HashMap<>();
 		for (T t : input) {
-			Integer oldValue = tCount.computeIfAbsent(t, k -> Integer.valueOf(0));
-			tCount.put(t, oldValue + 1);
+			Integer oldValue = freqCount.computeIfAbsent(t, k -> Integer.valueOf(0));
+			freqCount.put(t, oldValue + 1);
 		}
-
-		HashMap<T, Double> freqCount = new HashMap<>();
-
-		for (Entry<T, Integer> entry : tCount.entrySet()) {
-			freqCount.put(entry.getKey(), (double) entry.getValue() / Double.valueOf(input.length));
-		}
-
+		
 		return genCode(freqCount);
 	}
 
@@ -98,9 +92,9 @@ public class HuffmanCode<T> {
 		return sb.toString();
 	}
 
-	public Map<T, String> genCode(HashMap<T, Double> freqCount) {
+	public Map<T, String> genCode(HashMap<T, Integer> freqCount) {
 		Queue<TreeNode> tree = new PriorityQueue<>();
-		for (Entry<T, Double> entry : freqCount.entrySet()) {
+		for (Entry<T, Integer> entry : freqCount.entrySet()) {
 			tree.add(new TreeNode(entry.getKey(), entry.getValue()));
 		}
 
