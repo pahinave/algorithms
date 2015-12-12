@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import pahinave.algorithms.trees.BinarySearchTree;
+import pahinave.algorithms.trees.Node;
 
 public class BinarySearchTreeTests {
 
@@ -56,7 +57,7 @@ public class BinarySearchTreeTests {
 	public void testCollectInorder() throws Exception {
 		System.out.println("TEST CASE : testCollectInorder");
 
-		List<BinarySearchTree<Integer>.Node> inorder = new ArrayList<>();
+		List<Node<Integer>> inorder = new ArrayList<>();
 		bst.collectInorder(inorder, bst.getRoot());
 		assertEquals(nNodes, inorder.size());
 		for (int i = 0; i < nNodes - 1; i++) {
@@ -69,7 +70,7 @@ public class BinarySearchTreeTests {
 	public void testPredecessor() throws Exception {
 		System.out.println(">>>>>>>>> TEST CASE : testPredecessor");
 
-		List<BinarySearchTree<Integer>.Node> inorder = new ArrayList<>();
+		List<Node<Integer>> inorder = new ArrayList<>();
 		bst.collectInorder(inorder, bst.getRoot());
 
 		assertEquals("predecessor of min node is not null", null, bst.predecessor(inorder.get(0)));
@@ -83,7 +84,7 @@ public class BinarySearchTreeTests {
 		// insert max number
 		int max = range + 1;
 		bst.insert(max);
-		BinarySearchTree<Integer>.Node foundMax = bst.maximum();
+		Node<Integer> foundMax = bst.maximum();
 		assertEquals(Integer.valueOf(max), foundMax.getData());
 	}
 
@@ -92,7 +93,7 @@ public class BinarySearchTreeTests {
 		// insert min number
 		int min = 0;
 		bst.insert(min);
-		BinarySearchTree<Integer>.Node foundMin = bst.minimum();
+		Node<Integer> foundMin = bst.minimum();
 		assertEquals(Integer.valueOf(min), foundMin.getData());
 	}
 
@@ -108,7 +109,7 @@ public class BinarySearchTreeTests {
 
 	@Test
 	public void testSuccessor() throws Exception {
-		List<BinarySearchTree<Integer>.Node> inorder = new ArrayList<>();
+		List<Node<Integer>> inorder = new ArrayList<>();
 		bst.collectInorder(inorder, bst.getRoot());
 
 		for (int i = 0; i < inorder.size() - 1; i++) {
@@ -122,13 +123,13 @@ public class BinarySearchTreeTests {
 	public void testDeleteSimple() throws Exception {
 		bst = new BinarySearchTree<>();
 
-		BinarySearchTree<Integer>.Node node5 = bst.insert(5);
-		BinarySearchTree<Integer>.Node node3 = bst.insert(3);
-		BinarySearchTree<Integer>.Node node6 = bst.insert(6);
-		BinarySearchTree<Integer>.Node node4 = bst.insert(4);
+		Node<Integer> node5 = bst.insert(5);
+		Node<Integer> node3 = bst.insert(3);
+		Node<Integer> node6 = bst.insert(6);
+		Node<Integer> node4 = bst.insert(4);
 
 		bst.delete(node4);
-		List<BinarySearchTree<Integer>.Node> nodes = new ArrayList<>();
+		List<Node<Integer>> nodes = new ArrayList<>();
 		bst.collectInorder(nodes);
 		assertEquals(3, nodes.size());
 		assertEquals(node3, nodes.get(0));
@@ -143,15 +144,15 @@ public class BinarySearchTreeTests {
 		// single child is right of parent
 		bst = new BinarySearchTree<>();
 
-		BinarySearchTree<Integer>.Node node5 = bst.insert(5);
-		BinarySearchTree<Integer>.Node node3 = bst.insert(3);
-		BinarySearchTree<Integer>.Node node6 = bst.insert(6);
-		BinarySearchTree<Integer>.Node node4 = bst.insert(4);
-		BinarySearchTree<Integer>.Node node1 = bst.insert(1);
-		BinarySearchTree<Integer>.Node node2 = bst.insert(2);
+		Node<Integer> node5 = bst.insert(5);
+		Node<Integer> node3 = bst.insert(3);
+		Node<Integer> node6 = bst.insert(6);
+		Node<Integer> node4 = bst.insert(4);
+		Node<Integer> node1 = bst.insert(1);
+		Node<Integer> node2 = bst.insert(2);
 
 		bst.delete(node2);
-		List<BinarySearchTree<Integer>.Node> nodes = new ArrayList<>();
+		List<Node<Integer>> nodes = new ArrayList<>();
 		bst.collectInorder(nodes);
 		assertEquals(5, nodes.size());
 		assertEquals(node1, nodes.get(0));
@@ -167,15 +168,15 @@ public class BinarySearchTreeTests {
 		// single child is left of parent
 		bst = new BinarySearchTree<>();
 
-		BinarySearchTree<Integer>.Node node5 = bst.insert(5);
-		BinarySearchTree<Integer>.Node node3 = bst.insert(3);
-		BinarySearchTree<Integer>.Node node6 = bst.insert(6);
-		BinarySearchTree<Integer>.Node node4 = bst.insert(4);
-		BinarySearchTree<Integer>.Node node2 = bst.insert(2);
-		BinarySearchTree<Integer>.Node node1 = bst.insert(1);
+		Node<Integer> node5 = bst.insert(5);
+		Node<Integer> node3 = bst.insert(3);
+		Node<Integer> node6 = bst.insert(6);
+		Node<Integer> node4 = bst.insert(4);
+		Node<Integer> node2 = bst.insert(2);
+		Node<Integer> node1 = bst.insert(1);
 
 		bst.delete(node2);
-		List<BinarySearchTree<Integer>.Node> nodes = new ArrayList<>();
+		List<Node<Integer>> nodes = new ArrayList<>();
 		bst.collectInorder(nodes);
 		assertEquals(5, nodes.size());
 		assertEquals(node1, nodes.get(0));
@@ -196,7 +197,7 @@ public class BinarySearchTreeTests {
 		// 1
 		// 0
 		bst.insert(5);
-		BinarySearchTree<Integer>.Node nodeToDelete = bst.insert(3);
+		Node<Integer> nodeToDelete = bst.insert(3);
 		bst.insert(6);
 		bst.insert(4);
 		bst.insert(2);
@@ -204,7 +205,7 @@ public class BinarySearchTreeTests {
 		bst.insert(0);
 
 		bst.delete(nodeToDelete);
-		List<BinarySearchTree<Integer>.Node> nodes = new ArrayList<>();
+		List<Node<Integer>> nodes = new ArrayList<>();
 		bst.collectInorder(nodes);
 		assertEquals(6, nodes.size());
 		assertEquals(Integer.valueOf(0), nodes.get(0).getData());

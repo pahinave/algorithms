@@ -3,95 +3,29 @@ package pahinave.algorithms.trees;
 import java.util.List;
 
 public class BinarySearchTree<T extends Comparable<T>> {
-	Node root;
+	Node<T> root;
 
-	public class Node implements Comparable<Node> {
-		T data;
-		Node left;
-		Node right;
-		Node parent;
-
-		public Node(T data) {
-			super();
-			this.data = data;
-		}
-
-		public Node(Node value) {
-			this.setValues(value);
-		}
-
-		public T getData() {
-			return data;
-		}
-
-		public void setData(T data) {
-			this.data = data;
-		}
-
-		public Node getLeft() {
-			return left;
-		}
-
-		public void setLeft(Node left) {
-			this.left = left;
-		}
-
-		public Node getRight() {
-			return right;
-		}
-
-		public void setRight(Node right) {
-			this.right = right;
-		}
-
-		public Node getParent() {
-			return parent;
-		}
-
-		public void setParent(Node parent) {
-			this.parent = parent;
-		}
-
-		@Override
-		public String toString() {
-			return "Node [data=" + data + "]";
-		}
-
-		@Override
-		public int compareTo(BinarySearchTree<T>.Node o) {
-			return this.getData().compareTo(o.getData());
-		}
-
-		public void setValues(Node value) {
-			this.data = value.getData();
-			this.left = value.getLeft();
-			this.right = value.getRight();
-			this.parent = value.getParent();
-		}
-
-	}
-
-	public Node getRoot() {
+	public Node<T> getRoot() {
 		return root;
 	}
 
-	public void setRoot(Node root) {
+	public void setRoot(Node<T> root) {
 		this.root = root;
 	}
 
-	public Node insert(T value) {
-		Node newNode = new Node(value);
+	public Node<T> insert(T value) {
+		Node<T> newNode = new Node<T>(value);
 		insert(newNode);
 		return newNode;
 	}
 
-	public void insert(Node newNode) {
+	public void insert(Node<T> newNode) {
 		if (root == null) {
 			root = newNode;
 			return;
 		}
 
-		Node current = root;
+		Node<T> current = root;
 		while (true) {
 			if (newNode.getData().compareTo(current.getData()) <= 0) {
 				if (current.getLeft() == null) {
@@ -113,9 +47,9 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 	}
 
-	public Node search(T value) {
+	public Node<T> search(T value) {
 
-		Node current = root;
+		Node<T> current = root;
 		while (true) {
 			if (current == null || current.getData().compareTo(value) == 0) {
 				return current;
@@ -138,7 +72,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 	}
 
-	public void printPreorder(Node node) {
+	public void printPreorder(Node<T> node) {
 		if (node == null)
 			return;
 		System.out.println(node);
@@ -146,7 +80,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		printPreorder(node.getRight());
 	}
 
-	private void printRecursiveLoop(Node n, int level) {
+	private void printRecursiveLoop(Node<T> n, int level) {
 		if (n.getLeft() != null) {
 			printRecursiveLoop(n.getLeft(), level + 1);
 		}
@@ -158,11 +92,11 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 	}
 
-	public void collectInorder(List<Node> inorder) {
+	public void collectInorder(List<Node<T>> inorder) {
 		collectInorder(inorder, this.getRoot());
 	}
 
-	public void collectInorder(List<Node> inorder, Node current) {
+	public void collectInorder(List<Node<T>> inorder, Node<T> current) {
 		if (current.getLeft() != null) {
 			collectInorder(inorder, current.getLeft());
 		}
@@ -172,7 +106,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 	}
 
-	public Node maximum() {
+	public Node<T> maximum() {
 		if (root == null) {
 			return null;
 		}
@@ -180,7 +114,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		return maximum(this.getRoot());
 	}
 
-	public Node maximum(Node node) {
+	public Node<T> maximum(Node<T> node) {
 		while (node.getRight() != null) {
 			node = node.getRight();
 		}
@@ -188,7 +122,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		return node;
 	}
 
-	public Node minimum() {
+	public Node<T> minimum() {
 		if (root == null) {
 			return null;
 		}
@@ -196,7 +130,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		return minimum(this.getRoot());
 	}
 
-	public Node minimum(Node node) {
+	public Node<T> minimum(Node<T> node) {
 		while (node.getLeft() != null) {
 			node = node.getLeft();
 		}
@@ -204,9 +138,9 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		return node;
 	}
 
-	public Node predecessor(Node node) {
+	public Node<T> predecessor(Node<T> node) {
 
-		Node current = node;
+		Node<T> current = node;
 
 		if (current.getLeft() != null) {
 			return maximum(current.getLeft());
@@ -225,8 +159,8 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
 	}
 
-	public Node successor(Node node) {
-		Node current = node;
+	public Node<T> successor(Node<T> node) {
+		Node<T> current = node;
 		if (current.getRight() != null) {
 			return minimum(current.getRight());
 		} else {
@@ -242,7 +176,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 	}
 
-	public void delete(Node node) {
+	public void delete(Node<T> node) {
 
 		// simple case - node without any child
 		if (node.getLeft() == null && node.getRight() == null) {
@@ -258,7 +192,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
 		// node with single child
 		if (node.getLeft() == null || node.getRight() == null) {
-			Node singleChild = (node.getLeft() == null) ? node.getRight() : node.getLeft();
+			Node<T> singleChild = (node.getLeft() == null) ? node.getRight() : node.getLeft();
 			if (node == root) {
 				root = singleChild;
 			} else if (node.getParent().getLeft() == node) {
@@ -270,12 +204,14 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 
 		// node with two childs
-		Node pred = predecessor(node);
+		Node<T> pred = predecessor(node);
 		T temp = pred.getData();
 		pred.setData(node.getData());
 		node.setData(temp);
 		delete(pred);
 
 	}
+	
+	
 
 }
