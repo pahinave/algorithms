@@ -19,18 +19,16 @@ public class SortStackTest {
 		}
 		SortStack ss = new SortStack();
 		LinkedList<Integer> sorted = ss.sort(source);
-		System.out.print("Sorted:");
-		while(! sorted.isEmpty()) {
-			System.out.print(sorted.pop() + " ");
-		}
-		System.out.println();
 		
 		assertEquals(20, sorted.size());
-		int prev = Integer.MAX_VALUE;
+		int prev = Integer.MIN_VALUE;
+		
+		System.out.print("Sorted:");
 		while(sorted.size() > 0) {
 			int item = sorted.pop();
-			assertTrue(prev >= item);
+			assertTrue(prev <= item);
 			prev = item;
+			System.out.print(item + " ");
 		}
 	}
 }
