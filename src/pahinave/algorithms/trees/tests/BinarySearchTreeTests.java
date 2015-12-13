@@ -1,12 +1,14 @@
 package pahinave.algorithms.trees.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -216,36 +218,54 @@ public class BinarySearchTreeTests {
 		assertEquals(Integer.valueOf(6), nodes.get(5).getData());
 
 	}
-	
+
 	@Test
 	public void testBalancedTrue() throws Exception {
 		BinarySearchTree<Integer> tree = new BinarySearchTree<>();
 		List<Integer> values = Arrays.asList(4, 2, 6, 1, 3, 5, 6, 7);
 		tree.insertAll(values);
-		
+
 		boolean isBalanced = tree.isBalanced();
 		assertEquals(true, isBalanced);
 	}
-	
+
 	@Test
 	public void testBalancedTrue2() throws Exception {
 		BinarySearchTree<Integer> tree = new BinarySearchTree<>();
 		List<Integer> values = Arrays.asList(4, 2, 6, 1, 7);
 		tree.insertAll(values);
-		
+
 		boolean isBalanced = tree.isBalanced();
 		assertEquals(true, isBalanced);
-		
+
 	}
-	
+
 	@Test
 	public void testUnbalanced() throws Exception {
 		BinarySearchTree<Integer> tree = new BinarySearchTree<>();
 		List<Integer> values = Arrays.asList(4, 1, 6, 3, 5, 7, 2);
 		tree.insertAll(values);
-		
+
 		boolean isBalanced = tree.isBalanced();
 		assertEquals(false, isBalanced);
+	}
+
+	@Test
+	public void testBuildBinarySearchTreeFromSortedArrayOddLength() throws Exception {
+		List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8);
+		BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+		bst.buildFromSortedList(numbers);
+		Assert.assertTrue(bst.isBalanced());
+		Assert.assertEquals(4, bst.depth());
+	}
+
+	@Test
+	public void testBuildBinarySearchTreeFromSortedArrayEvenLength() throws Exception {
+		List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+		BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+		bst.buildFromSortedList(numbers);
+		Assert.assertTrue(bst.isBalanced());
+		Assert.assertEquals(4, bst.depth());
 	}
 
 }

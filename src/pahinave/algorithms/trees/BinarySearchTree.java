@@ -239,5 +239,29 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
 		return 1 + Math.max(maxHeight(node.getLeft()), maxHeight(node.getRight()));
 	}
+	
+	public int depth() {
+		return maxHeight(getRoot());
+	}
+	
+	public void buildFromSortedList(List<T> list) {
+		this.setRoot(buildFromSortedListRange(list, 0, list.size()-1));
+	}
+	
+	private Node<T> buildFromSortedListRange(List<T> list, int low, int high) {
+		if(low > high) {
+			return null;
+		}
+		
+		if(low == high) {
+			return new Node<>(list.get(low));
+		}
+		
+		int mid = (low + high) / 2;
+		Node<T> root = new Node<>(list.get(mid));
+		root.setLeft(buildFromSortedListRange(list, low, mid-1));
+		root.setRight(buildFromSortedListRange(list, mid+1, high));
+		return root;
+	}
 
 }
