@@ -1,5 +1,6 @@
 package pahinave.algorithms.trees;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BinarySearchTree<T extends Comparable<T>> {
@@ -13,6 +14,14 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		this.root = root;
 	}
 
+	public List<Node<T>> insertAll(List<T> values) {
+		List<Node<T>> nodes = new ArrayList<>();
+		for(T value : values) {
+			nodes.add(insert(value));
+		}
+		return nodes;
+	}
+	
 	public Node<T> insert(T value) {
 		Node<T> newNode = new Node<T>(value);
 		insert(newNode);
@@ -211,7 +220,24 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		delete(pred);
 
 	}
-	
-	
+
+	public boolean isBalanced() {
+		return Math.abs(maxHeight(getRoot()) - minHeight(getRoot())) <= 1;
+	}
+
+	private int minHeight(Node<T> node) {
+		if (node == null) {
+			return 0;
+		}
+		return 1 + Math.min(minHeight(node.getLeft()), minHeight(node.getRight()));
+	}
+
+	private int maxHeight(Node<T> node) {
+		if (node == null) {
+			return 0;
+		}
+
+		return 1 + Math.max(maxHeight(node.getLeft()), maxHeight(node.getRight()));
+	}
 
 }

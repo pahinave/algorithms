@@ -1,9 +1,9 @@
 package pahinave.algorithms.trees.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -215,6 +215,37 @@ public class BinarySearchTreeTests {
 		assertEquals(Integer.valueOf(5), nodes.get(4).getData());
 		assertEquals(Integer.valueOf(6), nodes.get(5).getData());
 
+	}
+	
+	@Test
+	public void testBalancedTrue() throws Exception {
+		BinarySearchTree<Integer> tree = new BinarySearchTree<>();
+		List<Integer> values = Arrays.asList(4, 2, 6, 1, 3, 5, 6, 7);
+		tree.insertAll(values);
+		
+		boolean isBalanced = tree.isBalanced();
+		assertEquals(true, isBalanced);
+	}
+	
+	@Test
+	public void testBalancedTrue2() throws Exception {
+		BinarySearchTree<Integer> tree = new BinarySearchTree<>();
+		List<Integer> values = Arrays.asList(4, 2, 6, 1, 7);
+		tree.insertAll(values);
+		
+		boolean isBalanced = tree.isBalanced();
+		assertEquals(true, isBalanced);
+		
+	}
+	
+	@Test
+	public void testUnbalanced() throws Exception {
+		BinarySearchTree<Integer> tree = new BinarySearchTree<>();
+		List<Integer> values = Arrays.asList(4, 1, 6, 3, 5, 7, 2);
+		tree.insertAll(values);
+		
+		boolean isBalanced = tree.isBalanced();
+		assertEquals(false, isBalanced);
 	}
 
 }
