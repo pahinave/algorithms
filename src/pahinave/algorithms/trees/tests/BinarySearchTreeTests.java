@@ -267,5 +267,34 @@ public class BinarySearchTreeTests {
 		Assert.assertTrue(bst.isBalanced());
 		Assert.assertEquals(4, bst.depth());
 	}
+	
+	@Test
+	public void levelWiseNodeListTest() throws Exception {
+		List<Integer> numbers = Arrays.asList(7,2,9,1,4,8,10,3,6,12,5,11,13);
+		BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+		bst.insertAll(numbers);
+		List<List<Node<Integer>>> levelWiseNodeList = bst.levelWiseNodeList();
+		Assert.assertEquals(5, levelWiseNodeList.size());
+		Assert.assertEquals(1, levelWiseNodeList.get(0).size());
+		Assert.assertEquals(2, levelWiseNodeList.get(1).size());
+		Assert.assertEquals(4, levelWiseNodeList.get(2).size());
+		Assert.assertEquals(3, levelWiseNodeList.get(3).size());
+		Assert.assertEquals(3, levelWiseNodeList.get(4).size());
+		
+		// More asserts can be added to check contents of individual lists
+		// as shown below
+		// 7
+		// 2 9
+		// 1 4 8 10
+		// 3 6 12
+		// 5 11 13
+	}
+	
+	@Test
+	public void levelWiseNodeListForEmptyTreeTest() throws Exception {
+		BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+		List<List<Node<Integer>>> levelWiseNodeList = bst.levelWiseNodeList();
+		Assert.assertEquals(0, levelWiseNodeList.size());
+	}
 
 }

@@ -1,6 +1,7 @@
 package pahinave.algorithms.trees;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BinarySearchTree<T extends Comparable<T>> {
@@ -16,12 +17,12 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
 	public List<Node<T>> insertAll(List<T> values) {
 		List<Node<T>> nodes = new ArrayList<>();
-		for(T value : values) {
+		for (T value : values) {
 			nodes.add(insert(value));
 		}
 		return nodes;
 	}
-	
+
 	public Node<T> insert(T value) {
 		Node<T> newNode = new Node<T>(value);
 		insert(newNode);
@@ -239,29 +240,60 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
 		return 1 + Math.max(maxHeight(node.getLeft()), maxHeight(node.getRight()));
 	}
-	
+
 	public int depth() {
 		return maxHeight(getRoot());
 	}
-	
+
 	public void buildFromSortedList(List<T> list) {
-		this.setRoot(buildFromSortedListRange(list, 0, list.size()-1));
+		this.setRoot(buildFromSortedListRange(list, 0, list.size() - 1));
 	}
-	
+
 	private Node<T> buildFromSortedListRange(List<T> list, int low, int high) {
-		if(low > high) {
+		if (low > high) {
 			return null;
 		}
-		
-		if(low == high) {
+
+		if (low == high) {
 			return new Node<>(list.get(low));
 		}
-		
+
 		int mid = (low + high) / 2;
 		Node<T> root = new Node<>(list.get(mid));
-		root.setLeft(buildFromSortedListRange(list, low, mid-1));
-		root.setRight(buildFromSortedListRange(list, mid+1, high));
+		root.setLeft(buildFromSortedListRange(list, low, mid - 1));
+		root.setRight(buildFromSortedListRange(list, mid + 1, high));
 		return root;
 	}
 
+	public List<List<Node<T>>> levelWiseNodeList() {
+		if (this.getRoot() == null) {
+			return new ArrayList<>();
+		} else {
+			List<Node<T>> nodesAtRootLevel = Arrays.asList(this.getRoot());
+			List<List<Node<T>>> nodesAtAllBelowLevels = levelWiseNodeList(nodesAtRootLevel);
+			nodesAtAllBelowLevels.add(0, nodesAtRootLevel);
+			return nodesAtAllBelowLevels;
+		}
+	}
+
+	private List<List<Node<T>>> levelWiseNodeList(List<Node<T>> nodesAtPrevLevel) {
+		
+		List<Node<T>> nodesAtThisLevel = new ArrayList<>();
+		for(Node<T> node : nodesAtPrevLevel) {
+			if(node.getLeft() != null) {
+				nodesAtThisLevel.add(node.getLeft());
+			}
+			if(node.getRight() != null) {
+				nodesAtThisLevel.add(node.getRight());
+			}
+		}
+		
+		if(nodesAtThisLevel.isEmpty()) {
+			return new ArrayList<>();
+		}
+		
+		List<List<Node<T>>> nodesAtAllBelowLevels = levelWiseNodeList(nodesAtThisLevel);
+		nodesAtAllBelowLevels.add(0, nodesAtThisLevel);
+		return nodesAtAllBelowLevels;
+	}
 }
