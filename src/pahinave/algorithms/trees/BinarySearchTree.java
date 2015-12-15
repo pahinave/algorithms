@@ -2,6 +2,7 @@ package pahinave.algorithms.trees;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class BinarySearchTree<T extends Comparable<T>> {
@@ -269,16 +270,18 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		if (this.getRoot() == null) {
 			return new ArrayList<>();
 		} else {
-			List<Node<T>> nodesAtRootLevel = Arrays.asList(this.getRoot());
-			List<List<Node<T>>> nodesAtAllBelowLevels = levelWiseNodeList(nodesAtRootLevel);
-			nodesAtAllBelowLevels.add(0, nodesAtRootLevel);
-			return nodesAtAllBelowLevels;
+			List<Node<T>> nodesAtRootLevel = new LinkedList<>();
+			nodesAtRootLevel.add(getRoot());
+			
+			List<List<Node<T>>> nodesAtAllLevels = levelWiseNodeList(nodesAtRootLevel);
+			nodesAtAllLevels.add(0, nodesAtRootLevel);
+			return nodesAtAllLevels;
 		}
 	}
 
 	private List<List<Node<T>>> levelWiseNodeList(List<Node<T>> nodesAtPrevLevel) {
 		
-		List<Node<T>> nodesAtThisLevel = new ArrayList<>();
+		List<Node<T>> nodesAtThisLevel = new LinkedList<>();
 		for(Node<T> node : nodesAtPrevLevel) {
 			if(node.getLeft() != null) {
 				nodesAtThisLevel.add(node.getLeft());
@@ -289,7 +292,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 		
 		if(nodesAtThisLevel.isEmpty()) {
-			return new ArrayList<>();
+			return new LinkedList<>();
 		}
 		
 		List<List<Node<T>>> nodesAtAllBelowLevels = levelWiseNodeList(nodesAtThisLevel);
